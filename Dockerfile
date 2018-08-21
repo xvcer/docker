@@ -6,7 +6,9 @@ RUN apt-get update ; apt-get upgrade -y;
 
 RUN apt-get -y install openssh-server;
 
-RUN apt-get -y install python3-pip python-pip supervisor cron locales mlocate tmux \
+RUN apt-get -y install \
+libbz2-dev libgflags-dev \
+python3-pip python-pip supervisor cron locales mlocate tmux \
 borgbackup iputils-ping \
 htop rsyslog tzdata libpng-dev dh-autoreconf ctags dstat \
 mercurial autoconf automake libtool nasm make pkg-config git \
@@ -55,6 +57,7 @@ RUN curl -fsS https://dlang.org/install.sh | bash -s dmd -p /opt/dlang ; find /o
 
 RUN bash /tmp/install.sh;rm /tmp/install.sh; updatedb ;
 
+RUN cd /tmp;git clone https://github.com/facebook/rocksdb.git --depth=1;cd rocksdb;make shared_lib;make install-shared INSTALL_PATH=/usr;
 
 USER ol
 
